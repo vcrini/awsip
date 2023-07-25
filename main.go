@@ -8,12 +8,22 @@ import (
 	"github.com/vcrini/go-utils"
 )
 
+var (
+	sha1ver   string // sha1 revision used to build the program
+	buildTime string // when the executable was built
+)
+
 func main() {
-	host := flag.String("host", "*", "Name of hosts or wildcard")
 	h := flag.Bool("h", false, "Display help")
+	host := flag.String("host", "*", "Name of hosts or wildcard")
 	instanceStateName := flag.String("instance-state-name", "running", "The state of the instance (pending | running | shutting-down | terminated | stopping | stopped | all ).")
+	v := flag.Bool("v", false, "if true, print version and exit")
 	// here all flags
 	flag.Parse()
+	if *v {
+		fmt.Printf("Build on %s from sha1 %s\n", buildTime, sha1ver)
+		os.Exit(0)
+	}
 	if *h {
 		flag.Usage()
 		os.Exit(0)
